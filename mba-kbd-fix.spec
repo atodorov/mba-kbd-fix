@@ -33,8 +33,8 @@ install -m 0644 %{SOURCE1}  %{buildroot}/%{_docdir}/%{name}
 
 %post
 systemctl daemon-reload
-systemctl enable mapping_fix
-systemctl start mapping_fix
+systemctl enable mba-kbd-fix
+systemctl start mba-kbd-fix
 
 %clean
 rm -rf %{buildroot}
