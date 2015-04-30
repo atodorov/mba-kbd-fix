@@ -26,18 +26,18 @@ echo > /dev/null
 rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/%{_sysconfdir}/modprobe.d/
-install -m 0644 %{source0} %{buildroot}/%{_sysconfdir}/modprobe.d/
+install -m 0644 %{SOURCE0} %{buildroot}/%{_sysconfdir}/modprobe.d/
 
-mkdir -p %{buildroot}/%{_docdir}/%{name}-%{version}
-install -m 0644 %{source1}  %{buildroot}/%{_docdir}/%{name}-%{version}
+mkdir -p %{buildroot}/%{_docdir}/%{name}
+install -m 0644 %{SOURCE1}  %{buildroot}/%{_docdir}/%{name}
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/modprobe.d/%{source0}
-%doc %{_docdir}/%{name}-%{version}/%{source1}
+%config(noreplace) %{_sysconfdir}/modprobe.d/mba-kbd-fix.conf
+%doc %{_docdir}/%{name}/README.md
 
 %changelog
 
