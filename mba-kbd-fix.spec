@@ -7,7 +7,7 @@ License:   MIT
 Group:     System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Source0:   mba-kbd-fix.conf
+Source0:   mba-kbd-fix.service
 Source1:   README.md
 
 BuildArch: noarch
@@ -25,18 +25,23 @@ echo > /dev/null
 %install
 rm -rf %{buildroot}
 
-mkdir -p %{buildroot}/%{_sysconfdir}/modprobe.d/
-install -m 0644 %{SOURCE0} %{buildroot}/%{_sysconfdir}/modprobe.d/
+mkdir -p %{buildroot}%{_sysconfdir}/systemd/system
+install -m 0644 %{SOURCE0} %{buildroot}%{_sysconfdir}/systemd/system
 
 mkdir -p %{buildroot}/%{_docdir}/%{name}
 install -m 0644 %{SOURCE1}  %{buildroot}/%{_docdir}/%{name}
+
+%post
+systemctl daemon-reload
+systemctl enable mapping_fix
+systemctl start mapping_fix
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/modprobe.d/mba-kbd-fix.conf
+%config(noreplace) %{_sysconfdir}/systemd/system/mba-kbd-fix.service
 %doc %{_docdir}/%{name}/README.md
 
 %changelog
